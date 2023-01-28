@@ -21,7 +21,7 @@ resource "aws_vpc" "prod-vpc" {
 
 # # 2. Create Internet Gateway
 
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "MK" {
    vpc_id = aws_vpc.prod-vpc.id
 
 
@@ -33,12 +33,12 @@ resource "aws_route_table" "prod-route-table" {
 
   route {
      cidr_block = "0.0.0.0/0"
-     gateway_id = aws_internet_gateway.gw.id
+     gateway_id = aws_internet_gateway.MK.id
    }
 
   route {
      ipv6_cidr_block = "::/0"
-     gateway_id      = aws_internet_gateway.gw.id
+     gateway_id      = aws_internet_gateway.MK.id
    }
 
    tags = {
@@ -117,7 +117,7 @@ resource "aws_eip" "one" {
   vpc                       = true
   network_interface         = aws_network_interface.web-server-nic.id
   associate_with_private_ip = "10.0.1.50"
-  depends_on                = [aws_internet_gateway.gw]
+  depends_on                = [aws_internet_gateway.MK]
 }
 
 output "server_public_ip" {
@@ -142,7 +142,7 @@ resource "aws_instance" "web-server-instance" {
                 sudo apt update -y
                 sudo apt install apache2 -y
                 sudo systemctl start apache2
-                sudo bash -c 'echo your very first web server > /var/www/html/index.html'
+                sudo bash -c 'echo My first web server > /var/www/html/index.html'
                 EOF
   tags = {
     Name = "web-server"
