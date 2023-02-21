@@ -4,10 +4,6 @@ provider "aws" {
   secret_key = "ucQFWfA/Xw/xLUZKQwXFin0pxSB54N2lB8epPjLD"
 }
 
-variable "subnet_prefix" {
-  description = "cidr block for the subnet"
-
-}
 
 
 # # 1. Create vpc
